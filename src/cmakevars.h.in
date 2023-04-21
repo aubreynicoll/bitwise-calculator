@@ -1,0 +1,2 @@
+#define MAJOR_VERSION "@bitcalc_VERSION_MAJOR@"
+#define MINOR_VERSION "@bitcalc_VERSION_MINOR@"
