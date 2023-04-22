@@ -8,7 +8,7 @@ class TokenStream;
 
 namespace parser {
 
-class ParserError {};
+class ParserError : public error::Error {};
 
 class Parser {
        public:

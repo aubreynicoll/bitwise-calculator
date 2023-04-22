@@ -66,14 +66,15 @@ Parser::number_t Parser::PRIMARY() {
 			number_t     exp = this->expression();
 			token::Token next = this->tokenStream.get();
 			if (next.type != ')') {
-				throw ParserError{};
+				throw ParserError{
+				    std::string{"Parser: expected ')'"}};
 			}
 			return exp;
 		}
 		case 'i':
 			return t.value;
 		default:
-			throw ParserError{};
+			throw ParserError{std::string{"expected primary"}};
 	}
 }
 }  // namespace parser

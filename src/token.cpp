@@ -5,7 +5,11 @@
 
 namespace token {
 
-TokenStream::TokenStream(std::istream &is) : inputStream{is} {};
+TokenStream::TokenStream(std::istream &is) : inputStream{is} {
+	this->inputStream.unsetf(std::ios::dec);
+	this->inputStream.unsetf(std::ios::oct);
+	this->inputStream.unsetf(std::ios::hex);
+};
 
 Token TokenStream::get() {
 	if (this->isBufferFull) {
@@ -35,20 +39,25 @@ Token TokenStream::get() {
 		case '6':
 		case '7':
 		case '8':
-		case '9': {
+		case '9':
+		case '-': {
 			this->inputStream.putback(c);
 			Token::value_t i;
 			this->inputStream >> i;
+			if (!this->inputStream) {
+				throw TokenStreamError{
+				    std::string{"bad input"}};
+			}
 			return Token{'i', i};
 		}
 		default:
-			throw TokenStreamError{};
+			throw TokenStreamError{std::string{"bad input"}};
 	}
 }
 
 void TokenStream::putback(Token const &t) {
 	if (this->isBufferFull) {
-		throw TokenStreamError{};
+		throw TokenStreamError{std::string{"buffer full"}};
 	}
 
 	this->buffer = t;

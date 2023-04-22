@@ -14,6 +14,6 @@ class Error {
 	char const *what() const noexcept;
 
        private:
-	std::string const &message;
+	std::string const message;
 };
 }  // namespace error

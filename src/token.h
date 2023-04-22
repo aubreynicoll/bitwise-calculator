@@ -7,7 +7,7 @@
 
 namespace token {
 
-class TokenStreamError {};
+class TokenStreamError : public error::Error {};
 
 class Token {
        public:
