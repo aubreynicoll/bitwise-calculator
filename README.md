@@ -2,11 +2,12 @@
 
 One of the exercises from Programming: Principles and Practice in C++ by Bjarne Stroustrup.
 
-### build
+### build & install
 ```
 cmake -B build .
 cmake --build build
-./build/a.out
+cmake --install build
+bitcalc
 ```
 
 ### usage
