@@ -6,7 +6,7 @@ namespace error {
 
 Error::Error(std::string const &s) : message{s} {};
 
-char const *Error::what() const noexcept {
+auto Error::what() const noexcept -> char const * {
 	return this->message.c_str();
 }
 }  // namespace error

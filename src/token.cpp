@@ -7,7 +7,7 @@
 
 namespace token {
 
-Token::Token(){};
+Token::Token() = default;
 Token::Token(type_t type) : type{type} {};
 Token::Token(type_t type, value_t value) : type{type}, value{value} {};
 Token::Token(type_t type, std::string name) : type{type}, name{name} {};
@@ -18,13 +18,13 @@ TokenStream::TokenStream(std::istream &is) : inputStream{is} {
 	this->inputStream.unsetf(std::ios::hex);
 };
 
-Token TokenStream::get() {
+auto TokenStream::get() -> Token {
 	if (this->isBufferFull) {
 		this->isBufferFull = false;
 		return this->buffer;
 	}
 
-	char c;
+	char c{};
 	this->inputStream >> c;
 
 	switch (c) {
@@ -50,7 +50,7 @@ Token TokenStream::get() {
 		case '9':
 		case '-': {
 			this->inputStream.putback(c);
-			Token::value_t i;
+			Token::value_t i{};
 			this->inputStream >> i;
 			if (!this->inputStream) {
 				throw TokenStreamError{
@@ -83,7 +83,7 @@ Token TokenStream::get() {
 	}
 }
 
-void TokenStream::putback(Token const &t) {
+auto TokenStream::putback(Token const &t) -> void {
 	if (this->isBufferFull) {
 		throw TokenStreamError{std::string{"buffer full"}};
 	}
@@ -92,7 +92,7 @@ void TokenStream::putback(Token const &t) {
 	this->isBufferFull = true;
 }
 
-void TokenStream::ignore(char c) {
+auto TokenStream::ignore(char c) -> void {
 	if (this->isBufferFull && this->buffer.type == c) {
 		this->isBufferFull = false;
 		return;

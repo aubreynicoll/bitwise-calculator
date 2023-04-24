@@ -36,9 +36,9 @@ class TokenStream {
        public:
 	TokenStream(std::istream &is);
 
-	Token get();
-	void  putback(Token const &t);
-	void  ignore(char c);
+	auto get() -> Token;
+	auto putback(Token const &t) -> void;
+	auto ignore(char c) -> void;
 
        private:
 	std::istream &inputStream;

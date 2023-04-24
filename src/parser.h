@@ -18,18 +18,18 @@ class Parser {
 
 	Parser(token::TokenStream &ts);
 
-	number_t statement();
+	auto statement() -> number_t;
 
        private:
-	number_t declaration();
-	number_t expression();
-	number_t OR();
-	number_t XOR();
-	number_t AND();
-	number_t COMPLEMENT();
-	number_t PRIMARY();
+	auto declaration() -> number_t;
+	auto expression() -> number_t;
+	auto OR() -> number_t;
+	auto XOR() -> number_t;
+	auto AND() -> number_t;
+	auto COMPLEMENT() -> number_t;
+	auto PRIMARY() -> number_t;
 
-	token::TokenStream			   &tokenStream;
+	token::TokenStream			 &tokenStream;
 	std::unordered_map<std::string, number_t> var_table;
 };
 

@@ -6,7 +6,7 @@ namespace parser {
 
 Parser::Parser(token::TokenStream &ts) : tokenStream{ts} {}
 
-Parser::number_t Parser::statement() {
+auto Parser::statement() -> Parser::number_t {
 	token::Token t = this->tokenStream.get();
 
 	switch (t.type) {
@@ -18,7 +18,7 @@ Parser::number_t Parser::statement() {
 	}
 }
 
-Parser::number_t Parser::declaration() {
+auto Parser::declaration() -> Parser::number_t {
 	token::Token t = this->tokenStream.get();
 
 	if (t.type != token::NAME) {
@@ -34,11 +34,11 @@ Parser::number_t Parser::declaration() {
 	return d;
 }
 
-Parser::number_t Parser::expression() {
+auto Parser::expression() -> Parser::number_t {
 	return this->OR();
 }
 
-Parser::number_t Parser::OR() {
+auto Parser::OR() -> Parser::number_t {
 	number_t     lval = this->XOR();
 	token::Token t;
 
@@ -50,7 +50,7 @@ Parser::number_t Parser::OR() {
 	return lval;
 }
 
-Parser::number_t Parser::XOR() {
+auto Parser::XOR() -> Parser::number_t {
 	number_t     lval = this->AND();
 	token::Token t;
 
@@ -62,7 +62,7 @@ Parser::number_t Parser::XOR() {
 	return lval;
 }
 
-Parser::number_t Parser::AND() {
+auto Parser::AND() -> Parser::number_t {
 	number_t     lval = this->COMPLEMENT();
 	token::Token t;
 
@@ -74,7 +74,7 @@ Parser::number_t Parser::AND() {
 	return lval;
 }
 
-Parser::number_t Parser::COMPLEMENT() {
+auto Parser::COMPLEMENT() -> Parser::number_t {
 	number_t     mask = 0;
 	token::Token t;
 
@@ -86,7 +86,7 @@ Parser::number_t Parser::COMPLEMENT() {
 	return mask ^ this->PRIMARY();
 }
 
-Parser::number_t Parser::PRIMARY() {
+auto Parser::PRIMARY() -> Parser::number_t {
 	token::Token t = this->tokenStream.get();
 
 	switch (t.type) {

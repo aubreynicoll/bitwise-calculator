@@ -11,9 +11,9 @@ class Error {
        public:
 	Error(std::string const &s);
 
-	char const *what() const noexcept;
+	[[nodiscard]] auto what() const noexcept -> char const *;
 
        private:
-	std::string const message;
+	std::string message;
 };
 }  // namespace error

@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-int main() {
+auto main() -> int {
 	std::cout << "bitwise calculator v" << MAJOR_VERSION << "."
 		  << MINOR_VERSION << " by Aubrey Nicoll"
 		  << "\n";
