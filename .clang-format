@@ -1,0 +1,12 @@
+BasedOnStyle: Google
+IndentWidth: 8
+TabWidth: 8
+UseTab: Always
+BreakStringLiterals: false
+AllowShortFunctionsOnASingleLine: Empty
+IncludeBlocks: Regroup
+AlignConsecutiveDeclarations: AcrossComments
+AlignConsecutiveMacros: Consecutive
+AlignAfterOpenBracket: Align
+InsertBraces: true
+BreakBeforeBraces: Attach 

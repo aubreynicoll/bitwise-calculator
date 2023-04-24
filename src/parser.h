@@ -29,7 +29,7 @@ class Parser {
 	number_t COMPLEMENT();
 	number_t PRIMARY();
 
-	token::TokenStream			 &tokenStream;
+	token::TokenStream			   &tokenStream;
 	std::unordered_map<std::string, number_t> var_table;
 };
 
