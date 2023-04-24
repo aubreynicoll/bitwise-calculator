@@ -6,32 +6,32 @@
 #include <iostream>
 
 int main() {
-	try {
-		std::cout << "bitwise calculator v" << MAJOR_VERSION << "."
-			  << MINOR_VERSION << " by Aubrey Nicoll"
-			  << "\n";
+	std::cout << "bitwise calculator v" << MAJOR_VERSION << "."
+		  << MINOR_VERSION << " by Aubrey Nicoll"
+		  << "\n";
 
-		token::TokenStream	 ts{std::cin};
-		parser::Parser		 p{ts};
-		parser::Parser::number_t result{};
+	token::TokenStream	 ts{std::cin};
+	parser::Parser		 p{ts};
+	parser::Parser::number_t result{};
 
-		while (true) {
+	while (true) {
+		try {
 			token::Token t{ts.get()};
 
 			switch (t.type) {
-				case ';':
+				case token::PRINT:
 					std::cout << "= " << std::hex << result
 						  << "\n";
 					continue;
-				case 'q':
+				case token::QUIT:
 					return 0;
 				default:
 					ts.putback(t);
-					result = p.expression();
+					result = p.statement();
 			}
+		} catch (error::Error const &e) {
+			std::cerr << "Error: " << e.what() << std::endl;
+			ts.ignore('\n');
 		}
-	} catch (error::Error const &e) {
-		std::cerr << "Error: " << e.what() << std::endl;
-		throw;
 	}
 }

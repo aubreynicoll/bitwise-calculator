@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.26.3)
-project(bitcalc VERSION 1.0)
+project(bitcalc VERSION 1.1)
 
 # set c++ std
 add_library(compile_flags INTERFACE)

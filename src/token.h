@@ -6,6 +6,14 @@
 #include <iostream>
 
 namespace token {
+const std::string DECLKEY = "let";
+enum Constants {
+	PRINT = ';',
+	QUIT = 'q',
+	NUMBER = '0',
+	LET = '1',
+	NAME = '2',
+};
 
 class TokenStreamError : public error::Error {};
 
@@ -14,8 +22,14 @@ class Token {
 	using type_t = char;
 	using value_t = parser::Parser::number_t;
 
-	type_t	type;
-	value_t value;
+	type_t	    type{};
+	value_t	    value{};
+	std::string name{};
+
+	Token();
+	Token(type_t type);
+	Token(type_t type, value_t value);
+	Token(type_t type, std::string name);
 };
 
 class TokenStream {
@@ -24,6 +38,7 @@ class TokenStream {
 
 	Token get();
 	void  putback(Token const &t);
+	void  ignore(char c);
 
        private:
 	std::istream &inputStream;

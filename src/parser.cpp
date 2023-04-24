@@ -6,6 +6,34 @@ namespace parser {
 
 Parser::Parser(token::TokenStream &ts) : tokenStream{ts} {}
 
+Parser::number_t Parser::statement() {
+	token::Token t = this->tokenStream.get();
+
+	switch (t.type) {
+		case token::LET:
+			return declaration();
+		default:
+			this->tokenStream.putback(t);
+			return expression();
+	}
+}
+
+Parser::number_t Parser::declaration() {
+	token::Token t = this->tokenStream.get();
+
+	if (t.type != token::NAME) {
+		throw ParserError{std::string{"expected name in declaration"}};
+	}
+
+	if ((this->tokenStream.get()).type != '=') {
+		throw ParserError{std::string{"missing '=' from declaration"}};
+	}
+
+	number_t d = this->expression();
+	this->var_table[t.name] = d;
+	return d;
+}
+
 Parser::number_t Parser::expression() {
 	return this->OR();
 }
@@ -66,12 +94,17 @@ Parser::number_t Parser::PRIMARY() {
 			number_t     exp = this->expression();
 			token::Token next = this->tokenStream.get();
 			if (next.type != ')') {
-				throw ParserError{
-				    std::string{"Parser: expected ')'"}};
+				throw ParserError{std::string{"expected ')'"}};
 			}
 			return exp;
 		}
-		case 'i':
+		case token::NAME:
+			if (!this->var_table.count(t.name)) {
+				throw ParserError{
+				    std::string{"unknown identifier"}};
+			}
+			return this->var_table[t.name];
+		case token::NUMBER:
 			return t.value;
 		default:
 			throw ParserError{std::string{"expected primary"}};

@@ -2,6 +2,8 @@
 
 #include <myerror.h>
 
+#include <unordered_map>
+
 namespace token {
 class TokenStream;
 };
@@ -16,16 +18,19 @@ class Parser {
 
 	Parser(token::TokenStream &ts);
 
-	number_t expression();
+	number_t statement();
 
        private:
+	number_t declaration();
+	number_t expression();
 	number_t OR();
 	number_t XOR();
 	number_t AND();
 	number_t COMPLEMENT();
 	number_t PRIMARY();
 
-	token::TokenStream &tokenStream;
+	token::TokenStream			 &tokenStream;
+	std::unordered_map<std::string, number_t> var_table;
 };
 
 }  // namespace parser
