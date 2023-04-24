@@ -1,0 +1,10 @@
+CompileFlags:
+	Add: [-Wall, -Wextra, -Werror]
+
+Diagnostics:
+  UnusedIncludes: Strict
+  ClangTidy:
+	  Add: [modernize*, cppcoreguidelines*]
+
+Hover:
+  ShowAKA: Yes
