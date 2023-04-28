@@ -20,8 +20,8 @@ auto main() -> int {
 
 			switch (t.type) {
 				case token::PRINT:
-					std::cout << "= " << std::hex << result
-						  << "\n";
+					std::cout << "= " << std::showbase
+						  << std::hex << result << "\n";
 					continue;
 				case token::QUIT:
 					return 0;
